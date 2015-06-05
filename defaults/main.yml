@@ -1,0 +1,6 @@
+---
+
+# Templates
+elao_openvz_templates_exclusive: false
+elao_openvz_templates_dir:       /var/lib/vz/template/cache
+elao_openvz_templates:           []

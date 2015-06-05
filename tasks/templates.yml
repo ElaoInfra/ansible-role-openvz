@@ -1,0 +1,22 @@
+---
+
+- name: templates > Download
+  get_url:
+    url:  "{{ item }}"
+    dest: "{{ elao_openvz_templates_dir }}/{{ item|basename }}"
+  with_items: elao_openvz_templates
+
+- name: templates > Exclusive - find files
+  command: "find -type f -printf '%P\n'"
+  args:
+    chdir: "{{ elao_openvz_templates_dir }}"
+  changed_when: false
+  register: _elao_openvz_templates_find_output
+  when: elao_openvz_templates_exclusive
+
+- name: templates > Exclusive - remove files
+  file:
+    path:  "{{ elao_openvz_templates_dir }}/{{ item }}"
+    state: absent
+  when: elao_openvz_templates_exclusive and (item not in elao_openvz_templates|map('basename'))
+  with_items: _elao_openvz_templates_find_output.stdout_lines
