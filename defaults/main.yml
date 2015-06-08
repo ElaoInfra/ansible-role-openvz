@@ -4,3 +4,12 @@
 elao_openvz_templates_exclusive: false
 elao_openvz_templates_dir:       /var/lib/vz/template/cache
 elao_openvz_templates:           []
+
+# Interfaces
+elao_openvz_interfaces_head_file:     /etc/network/interfaces.head
+elao_openvz_interfaces_head_template: ~
+elao_openvz_interfaces_head_config:   []
+
+elao_openvz_interfaces_tail_file:     /etc/network/interfaces.tail
+elao_openvz_interfaces_tail_template: ~
+elao_openvz_interfaces_tail_config:   []

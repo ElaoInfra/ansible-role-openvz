@@ -1,0 +1,13 @@
+---
+
+- name: interfaces > Template head
+  template:
+    src:  "{{ elao_openvz_interfaces_head_template|ternary(elao_openvz_interfaces_head_template, 'interfaces/head/empty.j2') }}"
+    dest: "{{ elao_openvz_interfaces_head_file }}"
+  when: (elao_openvz_interfaces_head_config is not none) or (elao_openvz_interfaces_head_config|length)
+
+- name: interfaces > Template tail
+  template:
+    src:  "{{ elao_openvz_interfaces_tail_template|ternary(elao_openvz_interfaces_tail_template, 'interfaces/tail/empty.j2') }}"
+    dest: "{{ elao_openvz_interfaces_tail_file }}"
+  when: (elao_openvz_interfaces_tail_config is not none) or (elao_openvz_interfaces_tail_config|length)
