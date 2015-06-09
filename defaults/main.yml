@@ -13,3 +13,6 @@ elao_openvz_interfaces_head_config:   []
 elao_openvz_interfaces_tail_file:     /etc/network/interfaces.tail
 elao_openvz_interfaces_tail_template: ~
 elao_openvz_interfaces_tail_config:   []
+
+# Storages
+elao_openvz_storages: []

@@ -1,0 +1,8 @@
+---
+
+- name: storages > Setup storages
+  command: "pvesm add {{ item.id }} -type {{ item.type }} -maxfiles {{ item.maxfiles|default(1) }} -server {{ item.server }} -export {{ item.export }} -content {{ item.content }} -nodes {{ item.nodes}}"
+  with_items: elao_openvz_storages
+  register: command_result
+  failed_when: "command_result.rc != 0 and 'already defined' not in command_result.stderr"
+  changed_when: "command_result.rc == 0"
