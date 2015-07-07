@@ -2,9 +2,19 @@
 
 - name: templates > Download
   get_url:
-    url:  "{{ item }}"
-    dest: "{{ elao_openvz_templates_dir }}/{{ item|basename }}"
+    url:  "{{ item.url }}"
+    dest: "{{ elao_openvz_templates_dir }}/{{ item.file|default(item.url|basename) }}"
   with_items: elao_openvz_templates
+
+- name: templates > Compute files 1
+  set_fact:
+    _elao_openvz_templates_files_item: "{{ item.file|default(item.url|basename) }}"
+  with_items: elao_openvz_templates
+  register: _elao_openvz_templates_files_result
+
+- name: templates > Compute files 2
+  set_fact:
+    _elao_openvz_templates_files: "{{ _elao_openvz_templates_files_result.results|map(attribute='ansible_facts._elao_openvz_templates_files_item')|list }}"
 
 - name: templates > Exclusive - find files
   command: "find -type f -printf '%P\n'"
@@ -18,5 +28,5 @@
   file:
     path:  "{{ elao_openvz_templates_dir }}/{{ item }}"
     state: absent
-  when: elao_openvz_templates_exclusive and (item not in elao_openvz_templates|map('basename'))
+  when: elao_openvz_templates_exclusive and (item not in _elao_openvz_templates_files)
   with_items: _elao_openvz_templates_find_output.stdout_lines
