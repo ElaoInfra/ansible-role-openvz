@@ -15,6 +15,7 @@
 - name: templates > Compute files 2
   set_fact:
     _elao_openvz_templates_files: "{{ _elao_openvz_templates_files_result.results|map(attribute='ansible_facts._elao_openvz_templates_files_item')|list }}"
+  when: _elao_openvz_templates_files_result.results is defined
 
 - name: templates > Exclusive - find files
   command: "find -type f -printf '%P\n'"
